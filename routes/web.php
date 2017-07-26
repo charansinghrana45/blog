@@ -12,5 +12,17 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('user.home');
 });
+
+Route::get('post', function () {
+    return view('user.post');
+})->name('post');
+
+
+// Admin Routs....
+Route::get('admin/home', function () {
+    return view("admin.home");
+});
+
+
