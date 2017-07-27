@@ -26,3 +26,8 @@ Route::get('admin/home', function () {
 });
 
 
+Route::get('admin/post', function () {
+    return view("admin.post.post");
+});
+
+
