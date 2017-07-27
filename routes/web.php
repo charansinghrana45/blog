@@ -21,12 +21,10 @@ Route::get('post', function () {
 
 
 // Admin Routs....
-Route::get('admin/home', function () {
-    return view("admin.home");
-});
+Route::group(['namespace' => 'Admin', 'middleware' => 'web'], function () {
+	
+	Route::get('admin/home', 'HomeController@index');
 
-
-Route::get('admin/post', function () {
-    return view("admin.post.post");
+	Route::resource('admin/post', 'PostController');
 
 });
