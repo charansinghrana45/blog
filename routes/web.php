@@ -11,7 +11,7 @@
 |
 */
 
-Route::git('',function () {
+Route::get('/',function () {
     return view('user.home');
 });
 
@@ -28,5 +28,5 @@ Route::get('admin/home', function () {
 
 Route::get('admin/post', function () {
     return view("admin.post.post");
-});
 
+});
