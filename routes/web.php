@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-
-    return view('welcome');
-});
-
+Route::git('',function () {
     return view('user.home');
 });
 
