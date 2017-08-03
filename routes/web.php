@@ -23,8 +23,10 @@ Route::get('post', function () {
 // Admin Routs....
 Route::group(['namespace' => 'Admin', 'middleware' => 'web'], function () {
 	
-	Route::get('admin/home', 'HomeController@index');
-
+	Route::get('admin/home', 'HomeController@index')->name('admin.home');
 	Route::resource('admin/post', 'PostController');
+	Route::resource('admin/category', 'categoryController');
+	Route::resource('admin/tag', 'tagController');
+	Route::resource('admin/user', 'userController');
 
 });

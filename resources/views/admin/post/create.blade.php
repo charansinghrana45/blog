@@ -70,7 +70,7 @@
                 
                 <div class="checkbox">
                   <label>
-                    <input type="checkbox" checked="checked" name="status"> Publish
+                    <input type="checkbox" name="status"> Publish
                   </label>
                 </div>
               </div>
@@ -84,6 +84,7 @@
 
               <div class="box-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{{ route('post.index') }}" class="btn btn-warning">Back</a>
               </div>
 
               </div>

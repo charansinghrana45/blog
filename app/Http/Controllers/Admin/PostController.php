@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostCreateRequest;
 use App\Model\Admin\Post;
+use App\Model\Admin\Category;
 
 class PostController extends Controller
 {
@@ -16,7 +17,10 @@ class PostController extends Controller
      */
     public function index()
     {
-       return "listing";
+
+       $posts = Post::all();
+
+       return view('admin.post.index',compact('posts'));
     }
 
     /**
@@ -84,7 +88,11 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+
+        $categories = Category::all();
+
+        return view('admin.post.edit',compact('post', 'categories'));
     }
 
     /**
@@ -96,7 +104,22 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = POST::find($id);
+
+        $post->title = $request->title;
+        $post->subtitle = $request->subtitle;
+        $post->slug = $request->slug;
+        $post->body = $request->body;
+        $post->posted_by = 1;
+
+        if($request->status)
+        $post->status = 1;
+
+        //$this->sync('App\Model\Admin\Category');
+
+        $post->save();
+
+         return redirect()->route('post.index')->with('success', 'Post has been edited successfully.');
     }
 
     /**
