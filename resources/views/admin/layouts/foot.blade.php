@@ -38,14 +38,20 @@
 
 <script>
   $(function () {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
+    $('#example1').DataTable({
       'paging'      : true,
-      'lengthChange': false,
-      'searching'   : false,
+      'lengthChange': true,
+      'searching'   : true,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : false
-    })
-  })
+      'autoWidth'   : false,
+      'lengthMenu'  : [ [2, 25, 50, -1], [2, 25, 50, "All"] ],
+      'columnDefs'  : [{ orderable: false, "targets": [-1,-2] }],
+    });
+  });
+
+  $(function () {
+    $('.select2').select2();
+  });
+
 </script>

@@ -37,7 +37,12 @@
               @endforeach
 
               @if(session()->has('success'))
-              {{ session()->get('success') }}
+              <div class="row col-lg-12">
+              <div class="col-lg-4 col-lg-offset-2 alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ session()->get('success') }} 
+              </div>
+              </div>
               @endif
               
               </div>

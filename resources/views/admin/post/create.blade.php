@@ -2,6 +2,12 @@
 
 @section('title','MyBlog Admin Panel')
 
+@push('css')
+
+<link rel="stylesheet" href="{{ asset('admin/bower_components/select2/dist/css/select2.min.css') }}">
+
+@endpush
+
 @section('conetent')
 
  <!-- Content Wrapper. Contains page content -->
@@ -37,7 +43,12 @@
               @endforeach
 
               @if(session()->has('success'))
-              {{ session()->get('success') }}
+              <div class="row col-lg-12">
+              <div class="col-lg-4 col-lg-offset-2 alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ session()->get('success') }} 
+              </div>
+              </div>
               @endif
               
               </div>
@@ -64,6 +75,26 @@
                   <label for="exampleInputFile">Post Image</label>
                   <input type="file" value="" name="image" id="exampleInputFile">
                 </div>
+
+                <div class="form-group">
+                  <label>Select Category</label>
+                  <select class="form-control select2"  name="categories[]" multiple="multiple" data-placeholder="Select a Category"
+                          style="width: 100%;">
+                   @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                   @endforeach
+                   </select>
+                </div>
+
+                <div class="form-group">
+                  <label>Select Tag</label>
+                  <select class="form-control select2"  name="tags[]" multiple="multiple" data-placeholder="Select a tag"
+                          style="width: 100%;">
+                   @foreach($tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                   @endforeach
+                   </select>
+                </div>
                 
                 <br>
                 <br>
@@ -78,8 +109,9 @@
               <div class="col-md-12">
                  <div class="form-group">
                   <label for="exampleInputFile">Post Body</label>
-                   <textarea class="textarea" name="body" value="body" placeholder="Place some text here"
-                      style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;"></textarea>
+                   <textarea class="textarea" id="editor1" name="body" value="body" placeholder="Place some text here"
+                      style="width: 100%; height: 400px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
+                   </textarea>
                 </div>
 
               <div class="box-footer">
@@ -105,3 +137,21 @@
   <!-- /.content-wrapper -->
 
 @endsection
+
+@push('js')
+
+<script src="{{ asset('admin/bower_components/select2/dist/js/select2.full.min.js') }}"></script>
+
+<script src="{{ asset('admin//bower_components/ckeditor/ckeditor.js') }}"></script>
+
+<script>
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
+    //bootstrap WYSIHTML5 - text editor
+    //$('.textarea').wysihtml5()
+  })
+</script>
+
+@endpush

@@ -14,11 +14,16 @@ class Post extends Model
 
     public function categories()
     {
-    	return $this->belongsToMany('App\Model\Admin\Category', 'category_posts');
+    	return $this->belongsToMany('App\Model\Admin\Category', 'category_posts')->withTimestamps();
 	}
 
 	public function tags()
 	{
-		return $this->belongsToMany('App\Model\Admin\Tag', 'post_tags');
+		return $this->belongsToMany('App\Model\Admin\Tag', 'post_tags')->withTimestamps();
 	}
+
+    public function getTitleAttribute($title)
+    {
+        return ucfirst($title);
+    }
 }

@@ -16,4 +16,9 @@ class Category extends Model
     {
     	return $this->belongsToMany('App\Model\Admin\Post', 'category_posts');
 	}
+
+	public function getNameAttribute($name)
+	{
+		return ucfirst($name);
+	}
 }

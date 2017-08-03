@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\PostCreateRequest;
 use App\Model\Admin\Post;
+use App\Model\Admin\Tag;
 use App\Model\Admin\Category;
 
 class PostController extends Controller
@@ -30,7 +31,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.post.create');
+
+        $categories = Category::all();
+
+        $tags= Tag::all();
+        
+        return view('admin.post.create', compact('categories','tags'));
     }
 
     /**
@@ -56,6 +62,9 @@ class PostController extends Controller
         $post->status = 1;
 
         $post->save();
+
+        $post->categories()->sync($request->categories);
+        $post->tags()->sync($request->tags);
        
        }
        catch(Exception $e) {
@@ -92,7 +101,9 @@ class PostController extends Controller
 
         $categories = Category::all();
 
-        return view('admin.post.edit',compact('post', 'categories'));
+        $tags= Tag::all();
+
+        return view('admin.post.edit',compact('post', 'categories','tags'));
     }
 
     /**
@@ -115,7 +126,8 @@ class PostController extends Controller
         if($request->status)
         $post->status = 1;
 
-        //$this->sync('App\Model\Admin\Category');
+        $post->categories()->sync($request->categories);
+        $post->tags()->sync($request->tags);
 
         $post->save();
 
@@ -130,6 +142,14 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->tags()->detach();
+
+        $post->categories()->detach();
+
+        $post->delete();
+
+        return redirect()->route('post.index')->with('success', 'post has been deleted successfully');
     }
 }

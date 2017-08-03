@@ -2,6 +2,12 @@
 
 @section('title','All Posts')
 
+@push('css')
+
+<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
+@endpush
+
 @section('conetent')
 
  <!-- Content Wrapper. Contains page content -->
@@ -27,6 +33,16 @@
               <h3 class="box-title">Posts</h3>
               <a class="col-lg-offset-5 btn btn-success" href="{{ route('post.create') }}">Add New Post</a>
             </div>
+
+              @if(session()->has('success'))
+              <div class="row col-lg-12">
+              <div class="col-lg-4 col-lg-offset-2 alert alert-dismissible alert-success">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ session()->get('success') }} 
+              </div>
+              </div>
+              @endif
+              
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
@@ -55,7 +71,15 @@
                   <td>{{ $post->slug }}</td>
                   <td>{{ $post->created_at }}</td>
                   <td><a href="{{ route('post.edit',['post' => $post->id ]) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td> 
-                  <td><a href="{{ route('post.edit',['post' => $post->id ]) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td> 
+                  <td>
+                    <form id="delete-form-{{ $post->id }}" style="display: none;" action="{{ route('post.destroy', $post->id) }}" method="POST">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    </form>
+
+                    <a href="{{ route('post.destroy',['post' => $post->id ]) }}" onclick="event.preventDefault(); if(confirm('Are you sure, want to delete this')) { document.getElementById('delete-form-{{ $post->id }}').submit(); } else { event.preventDefault(); }"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                  </td> 
+                  </td> 
                 </tr>
                 @endforeach
                 
@@ -86,3 +110,10 @@
   <!-- /.content-wrapper -->
 
 @endsection
+
+@push('js')
+
+<script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
+@endpush

@@ -2,6 +2,13 @@
 
 @section('title','All Tags')
 
+@push('css')
+
+<link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
+
+@endpush
+
+
 @section('conetent')
 
  <!-- Content Wrapper. Contains page content -->
@@ -27,6 +34,16 @@
               <h3 class="box-title">Categories</h3>
               <a class="col-lg-offset-5 btn btn-success" href="{{ route('category.create') }}">Add New Category</a>
             </div>
+
+            @if(session()->has('success'))
+            <div class="row col-lg-12">
+            <div class="col-lg-4 col-lg-offset-2 alert alert-dismissible alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ session()->get('success') }} 
+            </div>
+            </div>
+            @endif
+
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">
@@ -36,7 +53,7 @@
                   <th>Name</th>
                   <th>Slug</th>
                   <th>Created At</th>
-                  <th>Edit</th>
+                  <th >Edit</th>
                   <th>Delete</th>
                 </tr>
                 </thead>
@@ -53,7 +70,14 @@
                   <td>{{ $category->slug }}</td>
                   <td>{{ $category->created_at }}</td>
                   <td><a href="{{ route('category.edit',['category' => $category->id ]) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td> 
-                  <td><a href="{{ route('category.edit',['category' => $category->id ]) }}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td> 
+                  <td>
+                    <form id="delete-form-{{ $category->id }}" style="display: none;" action="{{ route('category.destroy', $category->id) }}" method="POST">
+                    {{ csrf_field() }}
+                    {{ method_field('DELETE') }}
+                    </form>
+
+                    <a href="{{ route('category.destroy',['category' => $category->id ]) }}" onclick="event.preventDefault(); if(confirm('Are you sure, want to delete this')) { document.getElementById('delete-form-{{ $category->id }}').submit(); } else { event.preventDefault(); }"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                  </td> 
                 </tr>
                 @endforeach
                 
@@ -83,3 +107,10 @@
   <!-- /.content-wrapper -->
 
 @endsection
+
+@push('js')
+
+<script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+
+@endpush

@@ -33,6 +33,16 @@
               <h3 class="box-title">Tags</h3>
               <a class="col-lg-offset-5 btn btn-success" href="{{ route('tag.create') }}">Add New Tag</a>
             </div>
+
+            @if(session()->has('success'))
+            <div class="row col-lg-12">
+            <div class="col-lg-4 col-lg-offset-2 alert alert-dismissible alert-success">
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+              {{ session()->get('success') }} 
+            </div>
+            </div>
+            @endif
+            
             <!-- /.box-header -->
             <div class="box-body">
               <table id="example1" class="table table-bordered table-striped">

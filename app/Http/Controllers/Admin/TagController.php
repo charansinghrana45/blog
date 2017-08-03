@@ -92,7 +92,7 @@ class TagController extends Controller
 
         $tag->save();
 
-        //return redirect()->route('tag.index')->with('success', 'Tag has been modified successfully');
+        return redirect()->route('tag.index')->with('success', 'Tag has been modified successfully');
     }
 
     /**
