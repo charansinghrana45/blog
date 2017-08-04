@@ -38,6 +38,15 @@
 
 <script>
   $(function () {
+
+    $('.select2').select2();
+
+  });
+</script>
+
+<script>
+
+  $(function () {
     $('#example1').DataTable({
       'paging'      : true,
       'lengthChange': true,
@@ -48,10 +57,15 @@
       'lengthMenu'  : [ [2, 25, 50, -1], [2, 25, 50, "All"] ],
       'columnDefs'  : [{ orderable: false, "targets": [-1,-2] }],
     });
-  });
 
-  $(function () {
-    $('.select2').select2();
-  });
+      //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    });
 
+     $('#datepicker2').datepicker({
+      autoclose: true
+    });
+
+  });
 </script>

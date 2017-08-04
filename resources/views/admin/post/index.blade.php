@@ -5,7 +5,8 @@
 @push('css')
 
 <link rel="stylesheet" href="{{ asset('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
-
+<link rel="stylesheet" href="{{ asset('adnim/bower_components/bootstrap-daterangepicker/daterangepicker.css') }} ">
+<link rel="stylesheet" href="{{ asset('admin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css') }}">
 @endpush
 
 @section('conetent')
@@ -42,6 +43,38 @@
               </div>
               </div>
               @endif
+
+              <div class="row col-lg-12">
+             <!-- Date -->
+              <div class="form-group pull-left col-lg-3">
+                  <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" name="from" class="form-control" id="datepicker" placeholder="From">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <div class="form-group pull-left col-lg-3">
+                  <div class="input-group date">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" name="to" class="form-control" id="datepicker2" placeholder="To">
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
+               <!-- /.form group -->
+                 <div class="pull-right">
+                    <div class="form-group">
+                    <select class="form-control">
+                      <option value="1" selected="true">Published</option>
+                      <option value="0">Unpublished</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
               
             <!-- /.box-header -->
             <div class="box-body">
@@ -73,7 +106,7 @@
                   <td><a href="{{ route('post.edit',['post' => $post->id ]) }}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td> 
                   <td>
                     <form id="delete-form-{{ $post->id }}" style="display: none;" action="{{ route('post.destroy', $post->id) }}" method="POST">
-                    {{ csrf_field() }}
+         )           {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     </form>
 
@@ -115,5 +148,8 @@
 
 <script src="{{ asset('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('admin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+
+
 
 @endpush
